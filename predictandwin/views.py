@@ -53,4 +53,24 @@ class TossAPIView(generics.GenericAPIView):
 
 
 class TossCoinAnalyticsAPIView(APIView):
-    ...
+
+    def get_customer_stake(self, customer):
+        return Stake.objects.filter(user=customer)
+
+    def get_customer_stake_result(self, stake):
+        return Result.objects.filter(user_stake=stake).first()
+
+    def post(self, request):
+        customer = request.user 
+
+        resbody = [
+            {
+                'customer_stake': StakeSerializer(self.get_customer_stake(customer), many=True).data,
+                'stake_result': ResultSerializer(self.get_customer_stake_result(stake)).data
+            }
+            for stake in self.get_customer_stake(customer)
+        ]
+        return Response({'customer': resbody})
+
+
+
