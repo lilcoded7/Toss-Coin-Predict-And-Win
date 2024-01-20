@@ -60,7 +60,7 @@ class TossCoinAnalyticsAPIView(APIView):
     def get_customer_stake_result(self, stake):
         return Result.objects.filter(user_stake=stake).first()
 
-    def post(self, request):
+    def get(self, request):
         customer = request.user 
 
         resbody = [
