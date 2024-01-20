@@ -26,7 +26,7 @@ class TossAPIView(generics.GenericAPIView):
 
         tossing_coin = random.choice(["HEAD", "TAIL"])
         is_winner = stake.prediction.side == tossing_coin
-        result = Result.objects.create(user_stake=stake, toss_choice=tossing_coin, is_winner=True)
+        result = Result.objects.create(user_stake=stake, toss_choice=tossing_coin, is_winner=is_winner)
 
         if not is_winner:
             return False
